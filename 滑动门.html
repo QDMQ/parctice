@@ -1,0 +1,65 @@
+<!doctype html>
+<meta charset="UTF-8">
+<html>
+<head>
+    <title>
+        鼠标滑过页面自动变大
+    </title>
+    <style>
+        #container {
+            height: 477px;
+            margin: 0 auto;
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #container img {
+            position: absolute;
+            display: block;
+            left: 0;
+            border-left: 1px solid #ccc;
+        }
+    </style>
+
+</head>
+<body>
+<div id="container">
+    <img src="door1.png"/>
+    <img src="door2.png"/>
+    <img src="door3.png"/>
+    <img src="door4.png"/>
+</div>
+<script>
+    window.onload=function(){
+        var box=document.getElementById("container");
+        var imgs=box.getElementsByTagName("img");
+        var imgwidth=imgs[0].offsetWidth;
+        var exposewidth=160;
+        var boxwidth=imgwidth+exposewidth*(imgs.length-1);
+        box.style.width=boxwidth+'px';
+        function setImgPos(){
+            for(var i=1;i<imgs.length;i++)
+            {
+                imgs[i].style.left=imgwidth+exposewidth*(i-1)+'px';
+            }
+        }
+        setImgPos();
+        var translate=imgwidth-exposewidth;
+        for(var i=0;i<imgs.length;i++)
+        {
+            (function(i){
+                imgs[i].onclick=function(){
+                    setImgPos();
+                    for(var j=1;j<=i;j++)
+                    {
+                        imgs[j].style.left=parseInt(imgs[j].style.left,10)-translate+'px';
+                    }
+                };
+            })(i);
+        }
+    };
+</script>
+</body>
+<ml>
